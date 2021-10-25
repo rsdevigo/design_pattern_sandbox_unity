@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
   private float turnSpeed = 45.0f;
   private float horizontalInput;
   private float forwardInput;
+  public GameManager gameManager;
   // Start is called before the first frame update
   void Start()
   {
@@ -23,5 +24,14 @@ public class PlayerController : MonoBehaviour
     transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
     // Rotates car based on Horizontal input
     transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * horizontalInput);
+  }
+
+  public void OnCollisionEnter(Collision collision)
+  {
+    Obstacle obstacle = collision.gameObject.GetComponent<Obstacle>();
+    if (obstacle != null)
+    {
+      gameManager.addPoint(obstacle.points);
+    }
   }
 }
